@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PromptPix</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 2rem; }
+    input { padding: 0.5rem; width: 300px; }
+    button { padding: 0.5rem 1rem; margin-left: 1rem; }
+    img { margin-top: 2rem; max-width: 90%; height: auto; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1> AI Wallpaper Generator</h1>
+  <input type="text" id="prompt" placeholder="Enter a prompt..." />
+  <button onclick="generate()">Generate</button>
+  <div id="result"></div>
+
+  <script>
+    async function generate() {
+      const prompt = document.getElementById('prompt').value;
+      const res = await fetch('http://localhost:3000/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt })
+      });
+
+      const data = await res.json();
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<img src="${data.imageUrl}" alt="Wallpaper" />`;
+    }
+  </script>
+</body>
+</html>
