@@ -16,8 +16,8 @@ if (!process.env.UNSPLASH_KEY) {
   process.exit(1); // Stop the server
 }
 
-app.post('/generate', async (req, res) => {
-  const { prompt } = req.body;
+app.get('/generate', async (req, res) => {
+  const prompt = req.query.prompt;
   console.log('📩 Prompt received:', prompt);
 
   try {
@@ -40,6 +40,7 @@ app.post('/generate', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('✅ Server running on http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });
